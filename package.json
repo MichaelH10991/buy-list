@@ -1,0 +1,46 @@
+{
+  "name": "buy-list",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A responsive react app that list albums I want and have purchased.",
+  "main": "index.js",
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/MichaelH10991/buy-list.git"
+  },
+  "author": "Mike Humphries",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MichaelH10991/buy-list/issues"
+  },
+  "homepage": "https://github.com/MichaelH10991/buy-list#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "react": "^16.8.6",
+    "react-dom": "^16.8.6",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "3.0.1",
+    "uuid": "^3.3.3"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  }
+}
