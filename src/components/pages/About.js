@@ -6,7 +6,7 @@ function About() {
     return (
         <React.Fragment>
             <h1>About</h1>
-            <p> this is app version: {versionNumber} </p>
+            <p> v{versionNumber} </p>
         </React.Fragment>
     )
 }

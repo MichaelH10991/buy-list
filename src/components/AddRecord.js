@@ -1,19 +1,21 @@
 import React, { Component } from 'react'
+import axios from 'axios'
+import headers from '../authorization'
 
-export class AddTodo extends Component {
-
+export class AddRecord extends Component {
     state = {
         title: ''
     }
-
     onChange = (e) => this.setState({ [e.target.name]: e.target.value })
-
     onSubmit = (e) => {
         e.preventDefault()
-        this.props.addTodo(this.state.title)
-        this.setState({ title: '' })
+        axios({
+            method: "get",
+            url: `https://api.discogs.com/database/search?q=${this.state.title}`,
+            headers: headers
+        }).then(res => this.props.showSearchResults(res.data.results)
+        ).catch(err => console.log(e))
     }
-
     render() {
         return (
             <form onSubmit={this.onSubmit} style={{ display: "flex" }}>
@@ -21,11 +23,10 @@ export class AddTodo extends Component {
                     type="text"
                     name="title"
                     style={{ flex: "10", padding: "5px" }}
-                    placeholder="add Todo ..."
+                    placeholder="Search albums e.g. Black Midi Schlagenheim..."
                     value={this.state.title}
                     onChange={this.onChange}
                 />
-
                 <input
                     type="submit"
                     value="Submit"
@@ -37,4 +38,4 @@ export class AddTodo extends Component {
     }
 }
 
-export default AddTodo
+export default AddRecord
