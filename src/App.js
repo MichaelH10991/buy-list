@@ -1,56 +1,56 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom'
+// import axios from 'axios'
 import './App.css';
-import Todos from './components/Todos';
+import Records from './components/Records';
 import About from './components/pages/About';
+import List from './components/List'
 import Header from './components/layout/Header'
-import AddTodo from './components/AddTodo'
-import uuid from 'uuid'
+import AddRecord from './components/AddRecord'
 
 class App extends Component {
   state = {
-    todos: [
-      {
-        id: uuid.v4(),
-        title: "this is a title",
-        completed: false
-      },
-      {
-        id: uuid.v4(),
-        title: "This is title 2",
-        completed: false
-      },
-      {
-        id: uuid.v4(),
-        title: "this is just superflous now... is that even how you spell that word?1",
-        completed: false
-      }
-    ]
+    records: [],
+    wantList: []
   }
+
+  /**
+   *  TODO save the master release id and make seperate API calls to the master id's
+   *  this will allow to get price and number of available copes etc.
+   * */
+
   markComplete = (id) => {
     this.setState({
-      todos: this.state.todos.map((todo) => {
-        if (todo.id === id) {
-          todo.completed = !todo.completed
+      records: this.state.records.map((record) => {
+        if (record.id === id) {
+          record.completed = !record.completed
         }
-        return todo
+        return record
       })
     })
   }
 
-  deleteTodo = (id) => {
+  deleteRecord = (id) => {
     this.setState({
-      todos: [...this.state.todos.filter(todo => todo.id !== id)]
+      records: [...this.state.records.filter(record => record.id !== id)]
     })
   }
 
-  addTodo = (title) => {
-    const newTodo = {
-      id: uuid.v4(),
-      title,
+  addRecord = (record) => {
+    const newRecord = {
+      id: record.id,
+      master_id: record.master_id,
+      title: record.title,
+      thumb: record.thumb,
+      price: record.lowest_price,
       completed: false
     }
-    this.setState({ todos: [...this.state.todos, newTodo] })
+    this.setState({ wantList: [...this.state.wantList, newRecord] })
+  }
+
+  showSearchResults = (releases) => {
+    console.log(releases)
+    this.setState({ records: releases })
   }
 
   render() {
@@ -61,11 +61,24 @@ class App extends Component {
             <Header />
             <Route exact path="/" render={props => (
               <React.Fragment>
-                <AddTodo addTodo={this.addTodo} />
-                <Todos
-                  todos={this.state.todos}
+                <AddRecord
+                  showSearchResults={this.showSearchResults}
+                />
+                <Records
+                  records={this.state.records}
+                  wantList={this.state.wantList}
                   markComplete={this.markComplete}
-                  deleteTodo={this.deleteTodo} />
+                  deleteRecord={this.deleteRecord}
+                  addRecord={this.addRecord} />
+              </React.Fragment>
+            )} />
+            <Route path="/list" render={props => (
+              <React.Fragment>
+                <List
+                  wantList={this.state.wantList}
+                  markComplete={this.markComplete}
+                  deleteRecord={this.deleteRecord}
+                  addRecord={this.addRecord} />
               </React.Fragment>
             )} />
             <Route path="/about" component={About} />
