@@ -11,7 +11,8 @@ import AddRecord from './components/AddRecord'
 class App extends Component {
   state = {
     records: [],
-    wantList: []
+    wantList: [],
+    mastersList: []
   }
 
   /**
@@ -22,10 +23,7 @@ class App extends Component {
   markComplete = (id) => {
     this.setState({
       records: this.state.records.map((record) => {
-        if (record.id === id) {
-          record.completed = !record.completed
-        }
-        return record
+        return record.id === id ? record.completed = !record.completed : record
       })
     })
   }
@@ -48,8 +46,7 @@ class App extends Component {
     this.setState({ wantList: [...this.state.wantList, newRecord] })
   }
 
-  showSearchResults = (releases) => {
-    console.log(releases)
+  displaySearchResults = (releases) => {
     this.setState({ records: releases })
   }
 
@@ -62,7 +59,7 @@ class App extends Component {
             <Route exact path="/" render={props => (
               <React.Fragment>
                 <AddRecord
-                  showSearchResults={this.showSearchResults}
+                  displaySearchResults={this.displaySearchResults}
                 />
                 <Records
                   records={this.state.records}
@@ -76,6 +73,7 @@ class App extends Component {
               <React.Fragment>
                 <List
                   wantList={this.state.wantList}
+                  mastersList={this.state.mastersList}
                   markComplete={this.markComplete}
                   deleteRecord={this.deleteRecord}
                   addRecord={this.addRecord} />

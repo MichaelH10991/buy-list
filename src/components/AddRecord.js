@@ -1,21 +1,20 @@
 import React, { Component } from 'react'
-import axios from 'axios'
-import headers from '../authorization'
+import apiHelper from '../axios/apiHelper'
 
 export class AddRecord extends Component {
     state = {
         title: ''
     }
+
     onChange = (e) => this.setState({ [e.target.name]: e.target.value })
     onSubmit = (e) => {
         e.preventDefault()
-        axios({
-            method: "get",
-            url: `https://api.discogs.com/database/search?q=${this.state.title}`,
-            headers: headers
-        }).then(res => this.props.showSearchResults(res.data.results)
-        ).catch(err => console.log(e))
+        apiHelper
+            .getSearchResults(this.state.title)
+            .then(res => this.props.displaySearchResults(res.data.results))
+            .catch(err => console.log(err))
     }
+
     render() {
         return (
             <form onSubmit={this.onSubmit} style={{ display: "flex" }}>
